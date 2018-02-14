@@ -258,6 +258,20 @@
   tags:
     - bootstrap-os
 
+- name: Write cacert file
+  copy:
+    src: "{{ openstack_ca }}"
+    dest: "/etc/kubernetes/openstack-ca.pem"
+    group: "{{ kube_cert_group }}"
+    mode: 0640
+  when:
+    - inventory_hostname in groups['k8s-cluster']
+    - cloud_provider is defined
+    - cloud_provider in [ 'openstack', 'azure', 'vsphere' ]
+    - openstack_ca is defined
+  tags:
+    - cloud-provider
+
 - name: Write cloud-config
   template:
     src: "{{ cloud_provider }}-cloud-config.j2"
