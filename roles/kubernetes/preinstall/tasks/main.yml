@@ -260,7 +260,7 @@
 
 - name: Write cacert file
   copy:
-    src: "{{ openstack_ca }}"
+    content: "{{ openstack_ca }}"
     dest: "/etc/kubernetes/openstack-ca.pem"
     group: "{{ kube_cert_group }}"
     mode: 0640
