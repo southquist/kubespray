@@ -9,6 +9,9 @@ domain-name="{{ openstack_domain_name }}"
 {% elif openstack_domain_id is defined and openstack_domain_id != "" %}
 domain-id ="{{ openstack_domain_id }}"
 {% endif %}
+{% if openstack_ca is defined and openstack_ca != "" %}
+ca-file="/etc/kubernetes/openstack-ca.pem"
+{% endif %}
 
 {% if openstack_blockstorage_version is defined %}
 [BlockStorage]
