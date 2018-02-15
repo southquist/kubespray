@@ -95,6 +95,11 @@ spec:
       name: cloudconfig
       readOnly: true
 {% endif %}
+{% if cloud_provider is defined and cloud_provider in ["openstack", "azure", "vsphere" ] %}
+    - mountPath: "{{ kube_config_dir }}/openstack-ca.pem"
+      name: openstackca
+      readOnly: true
+{% endif %}
   volumes:
   - name: ssl-certs-host
     hostPath:
@@ -114,4 +119,9 @@ spec:
   - hostPath:
       path: "{{ kube_config_dir }}/cloud_config"
     name: cloudconfig
+{% endif %}
+{% if cloud_provider is defined and cloud_provider in ["openstack", "azure", "vsphere"] %}
+  - hostPath:
+      path: "{{ kube_config_dir }}/openstack-ca.pem"
+    name: openstackca
 {% endif %}
